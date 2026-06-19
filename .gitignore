@@ -3,6 +3,9 @@ data/
 # crawling 폴더 내 개별 키워드 CSV 제외 (전체 병합본만 올림)
 crawling/*_reviews.csv
 crawling/*_autosave.csv
+crawling/musinsa_beauty_preprocessed.csv
+crawling/.ipynb_checkpoints/
+crawling.zip
 
 # 가상환경
 venv/
