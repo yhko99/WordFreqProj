@@ -46,30 +46,36 @@ def render_overview_page(df):
     with col1:
         st.write("#### 감성 분포")
         dist = su.sentiment_distribution(df)
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(4, 3))
         colors = {'긍정': '#2ecc71', '중립': '#f0ad4e', '부정': '#d9534f'}
         ax.bar(dist.index, dist.values, color=[colors.get(k, '#999') for k in dist.index])
-        ax.set_ylabel('리뷰 수')
-        st.pyplot(fig)
+        ax.set_ylabel('리뷰 수', fontsize=9)
+        ax.tick_params(labelsize=8)
+        fig.tight_layout()
+        st.pyplot(fig, use_container_width=False)
 
     with col2:
         st.write("#### 평점 분포")
         rating_counts = df['rating'].value_counts().sort_index()
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(4, 3))
         ax.bar(rating_counts.index.astype(str), rating_counts.values, color='#4C72B0')
-        ax.set_xlabel('평점')
-        ax.set_ylabel('리뷰 수')
-        st.pyplot(fig)
+        ax.set_xlabel('평점', fontsize=9)
+        ax.set_ylabel('리뷰 수', fontsize=9)
+        ax.tick_params(labelsize=8)
+        fig.tight_layout()
+        st.pyplot(fig, use_container_width=False)
 
     st.write("#### 리뷰 키워드 Top 20")
     with st.spinner("키워드 분석 중..."):
         top20 = su.top_keywords(df, 20)
     if top20:
         labels, counts = zip(*top20)
-        fig, ax = plt.subplots(figsize=(8, 8))
+        fig, ax = plt.subplots(figsize=(6, 6))
         ax.barh(list(reversed(labels)), list(reversed(counts)), color='#9B59B6')
-        ax.set_xlabel('빈도수')
-        st.pyplot(fig)
+        ax.set_xlabel('빈도수', fontsize=9)
+        ax.tick_params(labelsize=8)
+        fig.tight_layout()
+        st.pyplot(fig, use_container_width=False)
 
 
 def render_product_page(df):
@@ -90,20 +96,27 @@ def render_product_page(df):
     st.write("#### 감성 분포")
     dist = product_df['sentiment'].value_counts()
     colors = {'긍정': '#2ecc71', '중립': '#f0ad4e', '부정': '#d9534f'}
-    fig, ax = plt.subplots(figsize=(4, 3))
-    ax.bar(dist.index, dist.values, color=[colors.get(k, '#999') for k in dist.index])
-    st.pyplot(fig)
+    chart_col, _ = st.columns([1, 2])
+    with chart_col:
+        fig, ax = plt.subplots(figsize=(3, 2.2))
+        ax.bar(dist.index, dist.values, color=[colors.get(k, '#999') for k in dist.index])
+        ax.tick_params(labelsize=8)
+        fig.tight_layout()
+        st.pyplot(fig, use_container_width=False)
 
     st.write("#### 리뷰 목록")
 
     def highlight_sentiment(row):
-        color_map = {'긍정': 'background-color: #d4edda',
-                     '중립': 'background-color: #fff3cd',
-                     '부정': 'background-color: #f8d7da'}
+        color_map = {'긍정': 'color: #2ecc71',
+                     '중립': 'color: #999999',
+                     '부정': 'color: #e74c3c'}
         return [color_map.get(row['sentiment'], '')] * len(row)
 
     display_df = product_df[['rating', 'sentiment', 'review_text']].reset_index(drop=True)
-    st.dataframe(display_df.style.apply(highlight_sentiment, axis=1), use_container_width=True)
+    st.dataframe(
+        display_df.style.apply(highlight_sentiment, axis=1),
+        use_container_width=True,
+    )
 
 
 def render_predict_page(model, tokenizer):
