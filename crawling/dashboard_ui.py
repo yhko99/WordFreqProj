@@ -46,22 +46,22 @@ def render_overview_page(df):
     with col1:
         st.write("#### 감성 분포")
         dist = su.sentiment_distribution(df)
-        fig, ax = plt.subplots(figsize=(4, 3))
         colors = {'긍정': '#2ecc71', '중립': '#f0ad4e', '부정': '#d9534f'}
+        fig, ax = plt.subplots(figsize=(3, 2.2))
         ax.bar(dist.index, dist.values, color=[colors.get(k, '#999') for k in dist.index])
-        ax.set_ylabel('리뷰 수', fontsize=9)
-        ax.tick_params(labelsize=8)
+        ax.set_ylabel('리뷰 수', fontsize=8)
+        ax.tick_params(labelsize=7)
         fig.tight_layout()
         st.pyplot(fig, use_container_width=False)
 
     with col2:
         st.write("#### 평점 분포")
         rating_counts = df['rating'].value_counts().sort_index()
-        fig, ax = plt.subplots(figsize=(4, 3))
+        fig, ax = plt.subplots(figsize=(3, 2.2))
         ax.bar(rating_counts.index.astype(str), rating_counts.values, color='#4C72B0')
-        ax.set_xlabel('평점', fontsize=9)
-        ax.set_ylabel('리뷰 수', fontsize=9)
-        ax.tick_params(labelsize=8)
+        ax.set_xlabel('평점', fontsize=8)
+        ax.set_ylabel('리뷰 수', fontsize=8)
+        ax.tick_params(labelsize=7)
         fig.tight_layout()
         st.pyplot(fig, use_container_width=False)
 
@@ -70,12 +70,14 @@ def render_overview_page(df):
         top20 = su.top_keywords(df, 20)
     if top20:
         labels, counts = zip(*top20)
-        fig, ax = plt.subplots(figsize=(6, 6))
-        ax.barh(list(reversed(labels)), list(reversed(counts)), color='#9B59B6')
-        ax.set_xlabel('빈도수', fontsize=9)
-        ax.tick_params(labelsize=8)
-        fig.tight_layout()
-        st.pyplot(fig, use_container_width=False)
+        kw_col, _ = st.columns([1, 1])
+        with kw_col:
+            fig, ax = plt.subplots(figsize=(4, 4.5))
+            ax.barh(list(reversed(labels)), list(reversed(counts)), color='#9B59B6')
+            ax.set_xlabel('빈도수', fontsize=8)
+            ax.tick_params(labelsize=7)
+            fig.tight_layout()
+            st.pyplot(fig, use_container_width=False)
 
 
 def render_product_page(df):
