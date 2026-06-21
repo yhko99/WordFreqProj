@@ -1,0 +1,13 @@
+streamlit
+pandas
+matplotlib
+wordcloud
+JPype1==1.4.1
+konlpy
+selenium
+webdriver-manager
+beautifulsoup4
+tqdm
+tensorflow
+joblib
+scikit-learn
