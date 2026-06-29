@@ -1,0 +1,7 @@
+streamlit
+pandas
+matplotlib
+tensorflow
+joblib
+konlpy
+JPype1==1.4.1

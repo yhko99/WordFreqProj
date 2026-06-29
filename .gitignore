@@ -4,8 +4,24 @@ data/
 crawling/*_reviews.csv
 crawling/*_autosave.csv
 crawling/musinsa_beauty_preprocessed.csv
+crawling/beauty_reviews_preprocessed.csv
 crawling/.ipynb_checkpoints/
 crawling.zip
+# 팀원 원본 크롤링 데이터 (용량 큼, merge_team_data.py 실행 시 필요)
+crawling/external_raw/
+# 학습 로그 (용량 큼)
+crawling/train_log.txt
+crawling/train_compare_log.txt
+# 루트 작업용 사본 (1_source_code_data, 2_executable_data_model 안에 이미 포함됨, 중복 방지)
+crawling/beauty_reviews_merged.csv
+crawling/model/best_model_beauty_v2.keras
+crawling/model/sa_model_beauty_v2.keras
+crawling/model/sa_tokenizer_beauty_v2.pkl
+crawling/model/compare_*.keras
+crawling/model/compare_tokenizer.pkl
+crawling/발표자료.pptx
+crawling/발표_대본.md
+crawling/시연영상_대본.md
 
 # 가상환경
 venv/
